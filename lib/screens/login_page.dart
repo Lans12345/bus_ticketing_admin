@@ -1,4 +1,5 @@
 import 'package:bus_ticketing_admin/screens/home_page.dart';
+import 'package:bus_ticketing_admin/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatelessWidget {
@@ -12,7 +13,8 @@ class LandingPage extends StatelessWidget {
       body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/back.png'), fit: BoxFit.fitHeight),
+                image: AssetImage('assets/images/b.jpg'),
+                fit: BoxFit.fitHeight),
           ),
           child: Center(
             child: Padding(
@@ -34,15 +36,11 @@ class LandingPage extends StatelessWidget {
                           height: 20,
                         ),
                         BoldText(
-                            label: 'Hi, Welcome to',
-                            fontSize: 24,
+                            label: 'Hi, USER!',
+                            fontSize: 38,
                             color: Colors.blue),
                         const SizedBox(
                           height: 20,
-                        ),
-                        Image.asset(
-                          'assets/logo.png',
-                          height: 125,
                         ),
                         const SizedBox(
                           height: 80,
