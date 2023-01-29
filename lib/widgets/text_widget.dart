@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class NormalText extends StatelessWidget {
   late String label;
@@ -13,9 +12,8 @@ class NormalText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: GoogleFonts.openSans(
-        textStyle: TextStyle(fontSize: fontSize, color: color),
-      ),
+      style: TextStyle(
+          fontWeight: FontWeight.normal, fontSize: fontSize, color: color),
     );
   }
 }
@@ -31,10 +29,8 @@ class BoldText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: GoogleFonts.openSans(
-        fontWeight: FontWeight.w900,
-        textStyle: TextStyle(fontSize: fontSize, color: color),
-      ),
+      style: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: fontSize, color: color),
     );
   }
 }

@@ -13,8 +13,7 @@ class LandingPage extends StatelessWidget {
       body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/b.jpg'),
-                fit: BoxFit.fitHeight),
+                image: AssetImage('assets/images/b.jpg'), fit: BoxFit.fill),
           ),
           child: Center(
             child: Padding(
@@ -26,7 +25,7 @@ class LandingPage extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  height: 500,
+                  height: 180,
                   width: 400,
                   child: Center(
                     child: Column(
@@ -36,14 +35,11 @@ class LandingPage extends StatelessWidget {
                           height: 20,
                         ),
                         BoldText(
-                            label: 'Hi, USER!',
-                            fontSize: 38,
+                            label: 'Hi, ADMIN!',
+                            fontSize: 28,
                             color: Colors.blue),
                         const SizedBox(
                           height: 20,
-                        ),
-                        const SizedBox(
-                          height: 80,
                         ),
                         MaterialButton(
                             shape: RoundedRectangleBorder(
@@ -111,7 +107,7 @@ class LandingPage extends StatelessWidget {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
-                                                                        const HomeScreen()));
+                                                                        HomeScreen()));
                                                   } else {
                                                     ScaffoldMessenger.of(
                                                             context)
@@ -133,7 +129,7 @@ class LandingPage extends StatelessWidget {
                                   }));
                             }),
                         const SizedBox(
-                          height: 50,
+                          height: 20,
                         ),
                       ],
                     ),
