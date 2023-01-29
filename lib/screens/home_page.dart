@@ -12,69 +12,89 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: Card(
-        child: Container(
-          color: Colors.blue,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SideMenu(
-                // Page controller to manage a PageView
-                controller: page1,
-                // Will shows on top of all items, it can be a logo or a Title text
-                title: Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 50),
-                  child: BoldText(
-                      label: 'ADMIN PORTAL', fontSize: 18, color: Colors.white),
-                ),
-                footer: Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 50),
-                  child: BoldText(
-                      label: 'Bus Ticketing System',
-                      fontSize: 14,
-                      color: Colors.white),
-                ),
-                // Will show on bottom of SideMenu when displayMode was SideMenuDisplayMode.open
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          elevation: 3,
+          child: Container(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SideMenu(
+                  // Page controller to manage a PageView
+                  controller: page1,
+                  // Will shows on top of all items, it can be a logo or a Title text
+                  title: Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 50),
+                    child: BoldText(
+                        label: 'ADMIN PORTAL',
+                        fontSize: 18,
+                        color: Colors.black),
+                  ),
+                  footer: Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 50),
+                    child: NormalText(
+                        label: 'Bus Ticketing System',
+                        fontSize: 12,
+                        color: Colors.black),
+                  ),
+                  // Will show on bottom of SideMenu when displayMode was SideMenuDisplayMode.open
 
-                // Notify when display mode changed
-                onDisplayModeChanged: (mode) {
-                  print(mode);
-                },
-                // List of SideMenuItem to show them on SideMenu
-                items: [
-                  SideMenuItem(
-                    priority: 0,
-                    title: 'Users',
-                    onTap: (_, page1) {
-                      page1.changePage(0);
-                      page.jumpToPage(0);
-                    },
-                    icon: const Icon(
-                      Icons.person,
-                      color: Colors.white,
+                  // Notify when display mode changed
+                  onDisplayModeChanged: (mode) {
+                    print(mode);
+                  },
+                  // List of SideMenuItem to show them on SideMenu
+                  items: [
+                    SideMenuItem(
+                      priority: 0,
+                      title: 'Users',
+                      onTap: (_, page1) {
+                        page1.changePage(0);
+                        page.jumpToPage(0);
+                      },
+                      icon: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  SideMenuItem(
-                    priority: 1,
-                    title: 'Ride History',
-                    onTap: (_, page1) {
-                      page1.changePage(1);
-                      page.jumpToPage(1);
-                    },
-                    icon: const Icon(
-                      Icons.history,
-                      color: Colors.white,
+                    SideMenuItem(
+                      priority: 1,
+                      title: 'Ride History',
+                      onTap: (_, page1) {
+                        page1.changePage(1);
+                        page.jumpToPage(1);
+                      },
+                      icon: const Icon(
+                        Icons.history,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: PageView(
-                  controller: page,
-                  children: const [UsersTab(), RidesTab()],
+                    // SideMenuItem(
+                    //   priority: 5,
+                    //   title: 'Logout',
+                    //   onTap: (_, page1) {
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //         content: NormalText(
+                    //             label: 'Admin logged out!',
+                    //             fontSize: 12,
+                    //             color: Colors.white)));
+                    //     Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    //         builder: (context) => LandingPage()));
+                    //   },
+                    //   icon: const Icon(Icons.logout),
+                    // ),
+                  ],
                 ),
-              ),
-            ],
+                Expanded(
+                  child: PageView(
+                    controller: page,
+                    children: const [UsersTab(), RidesTab()],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
