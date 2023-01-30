@@ -1,4 +1,5 @@
 import 'package:bus_ticketing_admin/widgets/text_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UsersTab extends StatelessWidget {
@@ -58,11 +59,37 @@ class UsersTab extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: BoldText(
-                                label: '20', fontSize: 38, color: Colors.black),
-                          ),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Users')
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasError) {
+                                  print(snapshot.error);
+                                  return const Center(child: Text('Error'));
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  print('waiting');
+                                  return const Padding(
+                                    padding: EdgeInsets.only(top: 50),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                    )),
+                                  );
+                                }
+
+                                final data = snapshot.requireData;
+                                return Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: BoldText(
+                                      label: data.size.toString(),
+                                      fontSize: 38,
+                                      color: Colors.black),
+                                );
+                              }),
                         ],
                       ),
                     ),
@@ -72,51 +99,95 @@ class UsersTab extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: DataTable(columns: [
-                  DataColumn(
-                      label: NormalText(
-                          label: 'No.', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: NormalText(
-                          label: 'Name', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: NormalText(
-                          label: 'Email', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: NormalText(
-                          label: 'Address', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: NormalText(
-                          label: 'ID', fontSize: 18, color: Colors.black)),
-                ], rows: [
-                  for (int i = 0; i < 50; i++)
-                    DataRow(cells: [
-                      DataCell(
-                        NormalText(
-                            label: i.toString(),
-                            fontSize: 16,
-                            color: Colors.grey),
-                      ),
-                      DataCell(
-                        NormalText(
-                            label: 'name', fontSize: 16, color: Colors.grey),
-                      ),
-                      DataCell(
-                        NormalText(
-                            label: 'email', fontSize: 16, color: Colors.grey),
-                      ),
-                      DataCell(
-                        NormalText(
-                            label: 'address', fontSize: 16, color: Colors.grey),
-                      ),
-                      DataCell(
-                        NormalText(
-                            label: 'id', fontSize: 16, color: Colors.grey),
-                      ),
-                    ])
-                ]),
+              StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('Users')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return const Center(child: Text('Error'));
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      print('waiting');
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 50),
+                        child: Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.black,
+                        )),
+                      );
+                    }
+
+                    final data = snapshot.requireData;
+                    return Align(
+                      alignment: Alignment.topLeft,
+                      child: DataTable(columns: [
+                        DataColumn(
+                            label: NormalText(
+                                label: 'No.',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: NormalText(
+                                label: 'Name',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: NormalText(
+                                label: 'Email',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: NormalText(
+                                label: 'Address',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: NormalText(
+                                label: 'ID',
+                                fontSize: 18,
+                                color: Colors.black)),
+                      ], rows: [
+                        for (int i = 0; i < data.size; i++)
+                          DataRow(cells: [
+                            DataCell(
+                              NormalText(
+                                  label: i.toString(),
+                                  fontSize: 16,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(
+                              NormalText(
+                                  label: data.docs[i]['name'],
+                                  fontSize: 16,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(
+                              NormalText(
+                                  label: data.docs[i]['email'],
+                                  fontSize: 16,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(
+                              NormalText(
+                                  label: data.docs[i]['address'],
+                                  fontSize: 16,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(
+                              NormalText(
+                                  label: data.docs[i].id,
+                                  fontSize: 16,
+                                  color: Colors.grey),
+                            ),
+                          ])
+                      ]),
+                    );
+                  }),
+              const SizedBox(
+                height: 50,
               ),
             ],
           ),
